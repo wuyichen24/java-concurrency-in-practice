@@ -1,3 +1,3 @@
-# java-project-template
+# java-concurrency-in-practice
 
-The Java project template by gradle.
+The source code of the book "Java Concurrency in Practice (Brian Goetz)".
