@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch2;
 
 import java.math.BigInteger;
 import javax.servlet.*;
@@ -8,13 +8,14 @@ import net.jcip.annotations.*;
 /**
  * StatelessFactorizer
  *
- * A stateless servlet
- * 
+ * @list 2.1
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Stateless: It has no fields and references no fields from other classes.
  */
 @ThreadSafe
 public class StatelessFactorizer extends GenericServlet implements Servlet {
-
     public void service(ServletRequest req, ServletResponse resp) {
         BigInteger i = extractFromRequest(req);
         BigInteger[] factors = factor(i);

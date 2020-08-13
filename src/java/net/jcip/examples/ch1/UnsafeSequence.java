@@ -1,13 +1,14 @@
-package net.jcip.examples;
+package net.jcip.examples.ch1;
 
 import net.jcip.annotations.*;
 
 /**
  * UnsafeSequence
  *
+ * @list 1.1
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
  */
-
 @NotThreadSafe
 public class UnsafeSequence {
     private int value;
@@ -15,7 +16,7 @@ public class UnsafeSequence {
     /**
      * Returns a unique value.
      */
-    public int getNext() {
+    public int getNext() {        // If multiple threads call getNext() at the same time, they may receive a same value (They should have received different values).
         return value++;
     }
 }

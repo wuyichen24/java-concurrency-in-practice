@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch2;
 
 import java.math.BigInteger;
 import javax.servlet.*;
@@ -7,10 +7,13 @@ import net.jcip.annotations.*;
 
 /**
  * CachedFactorizer
- * <p/>
- * Servlet that caches its last request and result
  *
+ * @list 2.8
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Reconstruct the {@code SynchronizedFactorizer} to split one synchronized 
+ * block into multiple small synchronized blocks for improving concurrency.
  */
 @ThreadSafe
 public class CachedFactorizer extends GenericServlet implements Servlet {

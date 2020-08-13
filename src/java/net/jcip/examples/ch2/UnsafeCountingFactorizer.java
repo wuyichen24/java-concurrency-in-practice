@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch2;
 
 import java.math.BigInteger;
 import javax.servlet.*;
@@ -8,9 +8,11 @@ import net.jcip.annotations.*;
 /**
  * UnsafeCountingFactorizer
  *
- * Servlet that counts requests without the necessary synchronization
- *
+ * @list 2.2
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Servlet that counts requests without the necessary synchronization.
  */
 @NotThreadSafe
 public class UnsafeCountingFactorizer extends GenericServlet implements Servlet {

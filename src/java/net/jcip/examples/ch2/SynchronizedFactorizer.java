@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch2;
 
 import java.math.BigInteger;
 import javax.servlet.*;
@@ -8,18 +8,16 @@ import net.jcip.annotations.*;
 /**
  * SynchronizedFactorizer
  *
- * Servlet that caches last result, but with unnacceptably poor concurrency
- *
+ * @list 2.6
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
  */
-
 @ThreadSafe
 public class SynchronizedFactorizer extends GenericServlet implements Servlet {
     @GuardedBy("this") private BigInteger lastNumber;
     @GuardedBy("this") private BigInteger[] lastFactors;
 
-    public synchronized void service(ServletRequest req,
-                                     ServletResponse resp) {
+    public synchronized void service(ServletRequest req, ServletResponse resp) {       //synchronized guarantees thread-safe, but poor concurrency (performance).
         BigInteger i = extractFromRequest(req);
         if (i.equals(lastNumber))
             encodeIntoResponse(resp, lastFactors);

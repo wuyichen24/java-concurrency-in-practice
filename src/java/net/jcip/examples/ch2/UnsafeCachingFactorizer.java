@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch2;
 
 import java.math.BigInteger;
 import java.util.concurrent.atomic.*;
@@ -9,17 +9,17 @@ import net.jcip.annotations.*;
 /**
  * UnsafeCachingFactorizer
  *
- * Servlet that attempts to cache its last result without adequate atomicity
- *
+ * @list 2.5
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Servlet that attempts to cache its last result without adequate atomicity.
  */
 
 @NotThreadSafe
 public class UnsafeCachingFactorizer extends GenericServlet implements Servlet {
-    private final AtomicReference<BigInteger> lastNumber
-            = new AtomicReference<BigInteger>();
-    private final AtomicReference<BigInteger[]> lastFactors
-            = new AtomicReference<BigInteger[]>();
+    private final AtomicReference<BigInteger>   lastNumber  = new AtomicReference<BigInteger>();    
+    private final AtomicReference<BigInteger[]> lastFactors = new AtomicReference<BigInteger[]>();
 
     public void service(ServletRequest req, ServletResponse resp) {
         BigInteger i = extractFromRequest(req);
@@ -27,7 +27,7 @@ public class UnsafeCachingFactorizer extends GenericServlet implements Servlet {
             encodeIntoResponse(resp, lastFactors.get());
         else {
             BigInteger[] factors = factor(i);
-            lastNumber.set(i);
+            lastNumber.set(i);                   // The update operations of lastNumber and lastFactors can not be guaranteed in the same atomic operation. 
             lastFactors.set(factors);
             encodeIntoResponse(resp, factors);
         }
