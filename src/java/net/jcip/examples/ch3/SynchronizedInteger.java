@@ -4,10 +4,12 @@ import net.jcip.annotations.*;
 
 /**
  * SynchronizedInteger
- * <p/>
- * Thread-safe mutable integer holder
- *
+ * 
+ * @list 3.3
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Synchronize both the getter and setter for thread-safe.
  */
 @ThreadSafe
 public class SynchronizedInteger {
