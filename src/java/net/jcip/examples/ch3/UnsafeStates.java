@@ -2,10 +2,13 @@ package net.jcip.examples.ch3;
 
 /**
  * UnsafeStates
- * <p/>
- * Allowing internal mutable state to escape
  *
+ * @list 3.6
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>A public method returns a private field, which makes a private field public 
+ * (Escaped: Publish an object which should not have been public).
  */
 class UnsafeStates {
     private String[] states = new String[]{
@@ -13,6 +16,6 @@ class UnsafeStates {
     };
 
     public String[] getStates() {
-        return states;
+        return states;               // the states array has escaped its intended scope.
     }
 }

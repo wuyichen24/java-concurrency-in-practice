@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch3;
 
 import java.util.*;
 
 /**
  * Animals
- * <p/>
- * Thread confinement of local primitive and reference variables
  *
+ * @list 3.9
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>The example of stack confinement. 
  */
 public class Animals {
     Ark ark;
@@ -16,10 +18,9 @@ public class Animals {
 
     public int loadTheArk(Collection<Animal> candidates) {
         SortedSet<Animal> animals;
-        int numPairs = 0;
+        int numPairs = 0;                                              // numPairs and animals are local variables to this method. They cannot be accessed by other threads.
         Animal candidate = null;
 
-        // animals confined to method, don't let them escape!
         animals = new TreeSet<Animal>(new SpeciesGenderComparator());
         animals.addAll(candidates);
         for (Animal a : animals) {

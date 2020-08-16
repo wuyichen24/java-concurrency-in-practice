@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch3;
 
 import java.math.BigInteger;
 import javax.servlet.*;
