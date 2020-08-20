@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -7,16 +7,18 @@ import java.util.concurrent.*;
 
 /**
  * VisualComponent
- * <p/>
- * Delegating thread safety to multiple underlying state variables
- *
+ * 
+ * @list 4.9
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Delegating thread safety to multiple underlying state variables
  */
 public class VisualComponent {
-    private final List<KeyListener> keyListeners
-            = new CopyOnWriteArrayList<KeyListener>();
-    private final List<MouseListener> mouseListeners
-            = new CopyOnWriteArrayList<MouseListener>();
+	// There is no relationship between the set of mouse listeners and key listeners; the two are independent, 
+	// and therefore VisualComponent can delegate its thread safety obligations to two underlying thread-safe lists.
+    private final List<KeyListener> keyListeners = new CopyOnWriteArrayList<KeyListener>();
+    private final List<MouseListener> mouseListeners = new CopyOnWriteArrayList<MouseListener>();
 
     public void addKeyListener(KeyListener listener) {
         keyListeners.add(listener);

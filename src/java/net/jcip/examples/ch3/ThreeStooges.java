@@ -6,18 +6,19 @@ import net.jcip.annotations.*;
 
 /**
  * ThreeStooges
- * <p/>
- * Immutable class built out of mutable underlying objects,
- * demonstration of candidate for lock elision
  *
+ * @list 3.11
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of immutable objects can still use mutable objects internally to manage their state.
  */
 @Immutable
  public final class ThreeStooges {
-    private final Set<String> stooges = new HashSet<String>();
+    private final Set<String> stooges = new HashSet<String>(); // stooges field is final.
 
-    public ThreeStooges() {
-        stooges.add("Moe");
+    public ThreeStooges() {                                    // Proper construction.
+        stooges.add("Moe");            
         stooges.add("Larry");
         stooges.add("Curly");
     }

@@ -1,13 +1,17 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import net.jcip.annotations.*;
 
 /**
  * MutablePoint
- * <p/>
- * Mutable Point class similar to java.awt.Point
- *
+ * 
+ * @list 4.5
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Mutable Point class similar to java.awt.Point for representing the vehicle locations.
+ * 
+ * <p>Mutable Point class used by {@code MonitorVehicleTracker}.
  */
 @NotThreadSafe
 public class MutablePoint {

@@ -7,10 +7,13 @@ import net.jcip.annotations.*;
 
 /**
  * VolatileCachedFactorizer
- * <p/>
- * Caching the last result using a volatile reference to an immutable holder object
  *
+ * @list 3.13
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>This combination of an immutable holder object and a volatile reference used to ensure its timely visibility, 
+ * allows VolatileCachedFactorizer to be thread-safe even though it does no explicit locking.
  */
 @ThreadSafe
 public class VolatileCachedFactorizer extends GenericServlet implements Servlet {
@@ -21,7 +24,7 @@ public class VolatileCachedFactorizer extends GenericServlet implements Servlet 
         BigInteger[] factors = cache.getFactors(i);
         if (factors == null) {
             factors = factor(i);
-            cache = new OneValueCache(i, factors);
+            cache = new OneValueCache(i, factors);    //  When a thread sets the volatile cache field to reference a new OneValueCache, the new cached data becomes immediately visible to other threads (timely visibility).
         }
         encodeIntoResponse(resp, factors);
     }

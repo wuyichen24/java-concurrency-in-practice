@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import java.util.*;
 
@@ -6,10 +6,12 @@ import net.jcip.annotations.*;
 
 /**
  * MonitorVehicleTracker
- * <p/>
- * Monitor-based vehicle tracker implementation
- *
+ * 
+ * @list 4.4
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Vehicle tracker implementation using the Java monitor pattern.
  */
 @ThreadSafe
  public class MonitorVehicleTracker {
@@ -19,16 +21,16 @@ import net.jcip.annotations.*;
         this.locations = deepCopy(locations);
     }
 
-    public synchronized Map<String, MutablePoint> getLocations() {
+    public synchronized Map<String, MutablePoint> getLocations() {             // Because of locations Map is not thread-safe, use explicit synchronization to make this class thread-safe
         return deepCopy(locations);
     }
 
-    public synchronized MutablePoint getLocation(String id) {
+    public synchronized MutablePoint getLocation(String id) {                  // Because of locations Map is not thread-safe, use explicit synchronization to make this class thread-safe
         MutablePoint loc = locations.get(id);
         return loc == null ? null : new MutablePoint(loc);
     }
 
-    public synchronized void setLocation(String id, int x, int y) {
+    public synchronized void setLocation(String id, int x, int y) {            // Because of locations Map is not thread-safe, use explicit synchronization to make this class thread-safe
         MutablePoint loc = locations.get(id);
         if (loc == null)
             throw new IllegalArgumentException("No such ID: " + id);

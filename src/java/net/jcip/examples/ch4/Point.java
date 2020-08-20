@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import net.jcip.annotations.*;
 
 /**
  * Point
- * <p/>
- * Immutable Point class used by DelegatingVehicleTracker
  *
+ * @list 4.6
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Immutable Point class used by {@code DelegatingVehicleTracker}.
  */
 @Immutable
 public class Point {
