@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 import java.util.concurrent.*;
 
 /**
  * Memoizer
- * <p/>
- * Final implementation of Memoizer
- *
+ * 
+ * @list 5.19
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Final implementation of Memoizer: The improved version of {@code Memoizer3} by using atomic putIfAbsent method of ConcurrentMap, closing the window of vulnerability in {@code Memoizer3}.
  */
 public class Memoizer <A, V> implements Computable<A, V> {
     private final ConcurrentMap<A, Future<V>> cache
@@ -28,7 +30,7 @@ public class Memoizer <A, V> implements Computable<A, V> {
                     }
                 };
                 FutureTask<V> ft = new FutureTask<V>(eval);
-                f = cache.putIfAbsent(arg, ft);
+                f = cache.putIfAbsent(arg, ft);                      // Atomic putIfAbsent method
                 if (f == null) {
                     f = ft;
                     ft.run();

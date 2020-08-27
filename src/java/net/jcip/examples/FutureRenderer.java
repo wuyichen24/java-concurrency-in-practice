@@ -1,8 +1,9 @@
 package net.jcip.examples;
 
+import static net.jcip.examples.ch5.LaunderThrowable.launderThrowable;
+
 import java.util.*;
 import java.util.concurrent.*;
-import static net.jcip.examples.LaunderThrowable.launderThrowable;
 
 /**
  * FutureRenderer

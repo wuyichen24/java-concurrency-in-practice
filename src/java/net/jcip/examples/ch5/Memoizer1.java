@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -8,9 +8,13 @@ import net.jcip.annotations.*;
 /**
  * Memoizer1
  *
- * Initial cache attempt using HashMap and synchronization
- *
+ * @list 5.16
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Initial cache attempt using HashMap and synchronization
+ * 
+ * <p>Drawback: Only one thread at a time can execute compute at all. If another thread is busy computing a result, other threads calling compute may be blocked for a long time.
  */
 public class Memoizer1 <A, V> implements Computable<A, V> {
     @GuardedBy("this") private final Map<A, V> cache = new HashMap<A, V>();
@@ -20,8 +24,8 @@ public class Memoizer1 <A, V> implements Computable<A, V> {
         this.c = c;
     }
 
-    public synchronized V compute(A arg) throws InterruptedException {
-        V result = cache.get(arg);
+    public synchronized V compute(A arg) throws InterruptedException {         // HashMap is not thread-safe, so use synchronization to make sure only one thread at a time can execute compute at all (obvious scalability problem).
+        V result = cache.get(arg);                                             // First checks whether the desired result is already cached, and returns the precomputed value if it is
         if (result == null) {
             result = c.compute(arg);
             cache.put(arg, result);
@@ -29,7 +33,6 @@ public class Memoizer1 <A, V> implements Computable<A, V> {
         return result;
     }
 }
-
 
 interface Computable <A, V> {
     V compute(A arg) throws InterruptedException;

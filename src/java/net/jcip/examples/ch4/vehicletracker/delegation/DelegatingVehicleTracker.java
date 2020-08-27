@@ -1,4 +1,4 @@
-package net.jcip.examples.ch4;
+package net.jcip.examples.ch4.vehicletracker.delegation;
 
 import java.util.*;
 import java.util.concurrent.*;

@@ -1,11 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4.vehicletracker.publishing;
 
 import net.jcip.annotations.*;
 
 /**
  * SafePoint
  *
+ * @list 4.11
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Mutable Point class but thread-safe used by {@code DelegatingVehicleTracker}.
  */
 @ThreadSafe
 public class SafePoint {
@@ -23,11 +27,11 @@ public class SafePoint {
         this.set(x, y);
     }
 
-    public synchronized int[] get() {
+    public synchronized int[] get() {                      // Use synchronization to avoid a caller to see an inconsistent value
         return new int[]{x, y};
     }
 
-    public synchronized void set(int x, int y) {
+    public synchronized void set(int x, int y) {           // Use synchronization to avoid a caller to see an inconsistent value
         this.x = x;
         this.y = y;
     }

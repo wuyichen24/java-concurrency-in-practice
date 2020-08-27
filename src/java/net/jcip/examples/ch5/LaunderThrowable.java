@@ -1,17 +1,21 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 /**
  * StaticUtilities
  *
+ * @list 5.13
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Utility class to encapsulate some of the messier exception-handling logic.
  */
 public class LaunderThrowable {
-
     /**
-     * Coerce an unchecked Throwable to a RuntimeException
-     * <p/>
-     * If the Throwable is an Error, throw it; if it is a
-     * RuntimeException return it, otherwise throw IllegalStateException
+     * Transform an unchecked Throwable (inconvenient to deal with) to a RuntimeException
+     * 
+     * If it is a RuntimeException return it;
+     * If the Throwable is an Error, throw it; 
+     * Otherwise throw IllegalStateException.
      */
     public static RuntimeException launderThrowable(Throwable t) {
         if (t instanceof RuntimeException)

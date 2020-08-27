@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 import java.util.concurrent.*;
 
 /**
  * CellularAutomata
  *
- * Coordinating computation in a cellular automaton with CyclicBarrier
- *
+ * @list 5.15
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Demonstrates using a barrier to compute a cellular automata simulation.
  */
 public class CellularAutomata {
     private final Board mainBoard;

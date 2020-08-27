@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -6,12 +6,18 @@ import java.util.concurrent.*;
 
 /**
  * ProducerConsumer
- * <p/>
- * Producer and consumer tasks in a desktop search application
- *
+ * 
+ * @list 5.8
+ * @list 5.9
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Producer and consumer tasks in a desktop search application.
  */
 public class ProducerConsumer {
+    /**
+     * A producer task that searches a file hierarchy for files meeting an indexing criterion and puts their names on the work queue
+     */
     static class FileCrawler implements Runnable {
         private final BlockingQueue<File> fileQueue;
         private final FileFilter fileFilter;
@@ -53,6 +59,9 @@ public class ProducerConsumer {
         }
     }
 
+    /**
+     * A consumer task that takes file names from the queue and indexes them.
+     */
     static class Indexer implements Runnable {
         private final BlockingQueue<File> queue;
 
@@ -62,7 +71,7 @@ public class ProducerConsumer {
 
         public void run() {
             try {
-                while (true)
+                while (true)                                                   // The consumer threads never exit, which prevents the program from terminating.
                     indexFile(queue.take());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -86,9 +95,9 @@ public class ProducerConsumer {
         };
 
         for (File root : roots)
-            new Thread(new FileCrawler(queue, filter, root)).start();
+            new Thread(new FileCrawler(queue, filter, root)).start();          // Searches a file hierarchy for files meeting an indexing criterion and puts their names on the work queue
 
         for (int i = 0; i < N_CONSUMERS; i++)
-            new Thread(new Indexer(queue)).start();
+            new Thread(new Indexer(queue)).start();                            // Takes file names from the queue and indexes them.
     }
 }

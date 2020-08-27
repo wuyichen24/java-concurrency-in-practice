@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4.vehicletracker.publishing;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -7,10 +7,12 @@ import net.jcip.annotations.*;
 
 /**
  * PublishingVehicleTracker
- * <p/>
- * Vehicle tracker that safely publishes underlying state
- *
+ * 
+ * @list 4.12
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Vehicle tracker implementation for safely publishing underlying state.
  */
 @ThreadSafe
 public class PublishingVehicleTracker {

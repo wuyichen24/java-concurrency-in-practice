@@ -4,10 +4,12 @@ import java.util.concurrent.*;
 
 /**
  * TaskRunnable
- * <p/>
- * Restoring the interrupted status so as not to swallow the interrupt
- *
+ * 
+ * @list 5.10
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>The example of restoring the interrupted status so as not to swallow the interrupt.
  */
 public class TaskRunnable implements Runnable {
     BlockingQueue<Task> queue;
@@ -16,8 +18,8 @@ public class TaskRunnable implements Runnable {
         try {
             processTask(queue.take());
         } catch (InterruptedException e) {
-            // restore interrupted status
-            Thread.currentThread().interrupt();
+            
+            Thread.currentThread().interrupt();            // Restore interrupted status
         }
     }
 

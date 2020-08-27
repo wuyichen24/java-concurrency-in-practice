@@ -3,7 +3,7 @@ package net.jcip.examples;
 import java.util.*;
 
 import net.jcip.annotations.*;
-import net.jcip.examples.ch4.Point;
+import net.jcip.examples.ch4.vehicletracker.delegation.Point;
 
 /**
  * CooperatingNoDeadlock

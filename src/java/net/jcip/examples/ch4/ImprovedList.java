@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import java.util.*;
 
@@ -7,21 +7,22 @@ import net.jcip.annotations.*;
 /**
  * ImprovedList
  *
- * Implementing put-if-absent using composition
- *
+ * @list 4.16
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Implementing put-if-absent using composition
  */
 @ThreadSafe
 public class ImprovedList<T> implements List<T> {
     private final List<T> list;
 
-    /**
-     * PRE: list argument is thread-safe.
-     */
-    public ImprovedList(List<T> list) { this.list = list; }
+    public ImprovedList(List<T> list) {                                        // ImprovedList assumes that once a list is passed to its constructor, 
+    	this.list = list;                                                      // the client will not use the underlying list directly again, accessing it only through the ImprovedList.
+    }
 
-    public synchronized boolean putIfAbsent(T x) {
-        boolean contains = list.contains(x);
+    public synchronized boolean putIfAbsent(T x) {                             // It does not care whether the underlying List is thread-safe, 
+        boolean contains = list.contains(x);                                   // because it provides its own consistent locking that provides thread safety even if the List is not thread-safe or changes its locking implementation.
         if (contains)
             list.add(x);
         return !contains;
@@ -29,7 +30,6 @@ public class ImprovedList<T> implements List<T> {
 
     // Plain vanilla delegation for List methods.
     // Mutative methods must be synchronized to ensure atomicity of putIfAbsent.
-    
     public int size() {
         return list.size();
     }

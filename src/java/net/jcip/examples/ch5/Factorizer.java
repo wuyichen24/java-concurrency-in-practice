@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch5;
 
 import java.math.BigInteger;
 import javax.servlet.*;
@@ -7,10 +7,12 @@ import net.jcip.annotations.*;
 
 /**
  * Factorizer
- * <p/>
- * Factorizing servlet that caches results using Memoizer
- *
+ * 
+ * @list 5.20
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Factorizing servlet that caches results using {@code Memoizer}.
  */
 @ThreadSafe
 public class Factorizer extends GenericServlet implements Servlet {

@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch4;
 
 import java.util.*;
 
@@ -6,10 +6,12 @@ import net.jcip.annotations.*;
 
 /**
  * BetterVector
- * <p/>
- * Extending Vector to have a put-if-absent method
- *
+ * 
+ * @list 4.13
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of extending an thread-safe class: Add a put-if-absent method into Vector
  */
 @ThreadSafe
 public class BetterVector <E> extends Vector<E> {

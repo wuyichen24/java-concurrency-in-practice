@@ -1,4 +1,4 @@
-package net.jcip.examples.ch4;
+package net.jcip.examples.ch4.vehicletracker.monitor;
 
 import net.jcip.annotations.*;
 
