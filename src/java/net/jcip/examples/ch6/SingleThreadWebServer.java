@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,10 +6,12 @@ import java.net.Socket;
 
 /**
  * SingleThreadWebServer
- * <p/>
- * Sequential web server
  *
+ * @list 6.1
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Web server handles only one request at a time.
  */
 
 public class SingleThreadWebServer {

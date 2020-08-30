@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6;
 
 import java.util.concurrent.*;
 
 /**
  * WithinThreadExecutor
- * <p/>
- * Executor that executes tasks synchronously in the calling thread
- *
+ * 
+ * @list 6.6
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Implements an executor that executes tasks synchronously in the calling thread
  */
 public class WithinThreadExecutor implements Executor {
     public void execute(Runnable r) {

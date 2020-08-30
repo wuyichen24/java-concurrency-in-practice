@@ -1,13 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6;
 
 import java.util.concurrent.*;
 
 /**
  * ThreadPerTaskExecutor
- * <p/>
- * Executor that starts a new thread for each task
- *
+ * 
+ * @list 6.5
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Implement an executor that starts a new thread for each task.
  */
 public class ThreadPerTaskExecutor implements Executor {
     public void execute(Runnable r) {

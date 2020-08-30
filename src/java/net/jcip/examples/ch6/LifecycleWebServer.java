@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,10 +8,14 @@ import java.util.logging.*;
 
 /**
  * LifecycleWebServer
- * <p/>
- * Web server with shutdown support
  *
+ * @list 6.8
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Extend web server with lifecycle support.
+ * 
+ * <p>It can be shut down in two ways: programmatically by calling stop, and through a client request by sending the web server a specially formatted HTTP request.
  */
 public class LifecycleWebServer {
     private final ExecutorService exec = Executors.newCachedThreadPool();
@@ -33,7 +37,7 @@ public class LifecycleWebServer {
         }
     }
 
-    public void stop() {
+    public void stop() {                                                       // 1st way to shut down: Call stop() method
         exec.shutdown();
     }
 
@@ -43,7 +47,7 @@ public class LifecycleWebServer {
 
     void handleRequest(Socket connection) {
         Request req = readRequest(connection);
-        if (isShutdownRequest(req))
+        if (isShutdownRequest(req))                                            // 2nd way to shut down: Client sends a shutdown request to this web server.
             stop();
         else
             dispatchRequest(req);

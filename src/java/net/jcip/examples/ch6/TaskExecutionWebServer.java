@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -7,15 +7,16 @@ import java.util.concurrent.*;
 
 /**
  * TaskExecutionWebServer
- * <p/>
- * Web server using a thread pool
- *
+ * 
+ * @list 6.4
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Web server using a thread pool.
  */
 public class TaskExecutionWebServer {
     private static final int NTHREADS = 100;
-    private static final Executor exec
-            = Executors.newFixedThreadPool(NTHREADS);
+    private static final Executor exec = Executors.newFixedThreadPool(NTHREADS);         // A fixed-size thread pool with 100 threads.
 
     public static void main(String[] args) throws IOException {
         ServerSocket socket = new ServerSocket(80);
@@ -26,7 +27,7 @@ public class TaskExecutionWebServer {
                     handleRequest(connection);
                 }
             };
-            exec.execute(task);
+            exec.execute(task);                                                          // Let the executor executes the task.
         }
     }
 
