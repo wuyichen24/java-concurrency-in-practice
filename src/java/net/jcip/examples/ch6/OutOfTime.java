@@ -20,7 +20,7 @@ public class OutOfTime {
         Timer timer = new Timer();
         timer.schedule(new ThrowTask(), 1);
         SECONDS.sleep(1);
-        timer.schedule(new ThrowTask(), 1);                // After the first timer task throws RuntimeException. The timer will become unavailable.
+        timer.schedule(new ThrowTask(), 1);                // After the first timer task throws RuntimeException. The timer will become unavailable and throw the exception with message: Timer already cancelled.
         SECONDS.sleep(5);
     }
 

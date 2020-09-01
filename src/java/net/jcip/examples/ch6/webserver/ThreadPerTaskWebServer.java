@@ -1,4 +1,4 @@
-package net.jcip.examples.ch6;
+package net.jcip.examples.ch6.webserver;
 
 import java.io.IOException;
 import java.net.ServerSocket;

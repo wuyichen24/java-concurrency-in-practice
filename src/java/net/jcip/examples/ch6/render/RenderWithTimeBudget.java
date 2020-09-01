@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch6.render;
 
 import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -6,9 +6,11 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 /**
  * RenderWithTimeBudget
  *
- * Fetching an advertisement with a time budget
- *
+ * @list 6.16
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of adding timeout on Future.get().
  */
 public class RenderWithTimeBudget {
     private static final Ad DEFAULT_AD = new Ad();
@@ -24,12 +26,12 @@ public class RenderWithTimeBudget {
         try {
             // Only wait for the remaining time budget
             long timeLeft = endNanos - System.nanoTime();
-            ad = f.get(timeLeft, NANOSECONDS);
+            ad = f.get(timeLeft, NANOSECONDS);                       // Add timeout on Future.get()
         } catch (ExecutionException e) {
             ad = DEFAULT_AD;
-        } catch (TimeoutException e) {
-            ad = DEFAULT_AD;
-            f.cancel(true);
+        } catch (TimeoutException e) {                               // If Future.get() is timeout, it will throw TimeoutException, you can add operation to handle the timeout.
+            ad = DEFAULT_AD;                                         // If the get times out, it cancels the ad-fetching task and uses a default advertisement instead.
+            f.cancel(true);                                          // The true parameter means that the task thread can be interrupted if the task is currently running.
         }
         page.setAd(ad);
         return page;
