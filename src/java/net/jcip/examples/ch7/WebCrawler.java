@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch7;
 
 import java.net.URL;
 import java.util.*;
@@ -10,10 +10,12 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * WebCrawler
- * <p/>
- * Using TrackingExecutorService to save unfinished tasks for later execution
- *
+ * 
+ * @list 7.22
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Using {@code TrackingExecutor} to save unfinished tasks for later execution.
  */
 public abstract class WebCrawler {
     private volatile TrackingExecutor exec;
@@ -35,9 +37,9 @@ public abstract class WebCrawler {
 
     public synchronized void stop() throws InterruptedException {
         try {
-            saveUncrawled(exec.shutdownNow());
+            saveUncrawled(exec.shutdownNow());                     // Save the tasks that were submitted but never started
             if (exec.awaitTermination(TIMEOUT, UNIT))
-                saveUncrawled(exec.getCancelledTasks());
+                saveUncrawled(exec.getCancelledTasks());           // Save the tasks that were started but never completed
         } finally {
             exec = null;
         }

@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch7;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -6,10 +6,14 @@ import java.util.concurrent.*;
 
 /**
  * IndexingService
- * <p/>
- * Shutdown with poison pill
- *
+ * 
+ * @list 7.17
+ * @list 7.18
+ * @list 7.19
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of shutting down with poison pill.
  */
 public class IndexingService {
     private static final int CAPACITY = 1000;
@@ -42,7 +46,7 @@ public class IndexingService {
             } finally {
                 while (true) {
                     try {
-                        queue.put(POISON);
+                        queue.put(POISON);                           // When producer finishes, it submit a poison pill in the queue to let the consumer know to stop
                         break;
                     } catch (InterruptedException e1) { /* retry */
                     }
@@ -68,7 +72,7 @@ public class IndexingService {
             try {
                 while (true) {
                     File file = queue.take();
-                    if (file == POISON)
+                    if (file == POISON)                              // When consumer gets the poison pill, stop working
                         break;
                     else
                         indexFile(file);

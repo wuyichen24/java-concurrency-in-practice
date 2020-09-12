@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch7;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -8,10 +8,12 @@ import net.jcip.annotations.*;
 
 /**
  * SocketUsingTask
- * <p/>
- * Encapsulating nonstandard cancellation in a task with newTaskFor
- *
+ * 
+ * @list 7.12
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of encapsulating nonstandard cancellation in a task with newTaskFor
  */
 
 public abstract class SocketUsingTask <T> implements CancellableTask<T> {
@@ -29,11 +31,11 @@ public abstract class SocketUsingTask <T> implements CancellableTask<T> {
         }
     }
 
-    public RunnableFuture<T> newTask() {
-        return new FutureTask<T>(this) {
-            public boolean cancel(boolean mayInterruptIfRunning) {
-                try {
-                    SocketUsingTask.this.cancel();
+    public RunnableFuture<T> newTask() {                                       // a newTask factory method for constructing a RunnableFuture
+        return new FutureTask<T>(this) {  
+            public boolean cancel(boolean mayInterruptIfRunning) {             // This method overrides the Future.cancel()
+                try {                                                          // If a SocketUsingTask is cancelled through its Future, the socket is closed (by this.cancel) and the executing thread is interrupted (by super.cancel).
+                    SocketUsingTask.this.cancel();                             
                 } finally {
                     return super.cancel(mayInterruptIfRunning);
                 }

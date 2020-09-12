@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch7;
 
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -8,10 +8,12 @@ import net.jcip.annotations.*;
 
 /**
  * LogService
- * <p/>
- * Adding reliable cancellation to LogWriter
- *
+ * 
+ * @list 7.15
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Improve {@code LogWriter} by providing reliable shutdown.
  */
 public class LogService {
     private final BlockingQueue<String> queue;
@@ -38,10 +40,10 @@ public class LogService {
     }
 
     public void log(String msg) throws InterruptedException {
-        synchronized (this) {
-            if (isShutdown)
+        synchronized (this) {                                        // make the submission of a new log message atomic
+            if (isShutdown)                                          // atomically check for shutdown and conditionally increment a counter to “reserve” the right to submit a message
                 throw new IllegalStateException(/*...*/);
-            ++reservations;
+            ++reservations;                                         
         }
         queue.put(msg);
     }
