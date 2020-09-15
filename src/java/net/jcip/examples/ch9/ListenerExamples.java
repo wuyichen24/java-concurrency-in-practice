@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch9;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,14 @@ import javax.swing.*;
 /**
  * ListenerExamples
  *
+ * @list 9.4
+ * @list 9.5
+ * @list 9.6
+ * @list 9.8
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example of GUI action listener.
  */
 public class ListenerExamples {
     private static ExecutorService exec = Executors.newCachedThreadPool();
@@ -29,8 +36,8 @@ public class ListenerExamples {
 
     private final JButton computeButton = new JButton("Big computation");
 
-    private void longRunningTask() {
-        computeButton.addActionListener(new ActionListener() {
+    private void longRunningTask() {                                           // List 9.4 Start a long-running task without feedback.
+        computeButton.addActionListener(new ActionListener() {                 // Gets the long-running task out of the event thread in a “fire and forget” manner
             public void actionPerformed(ActionEvent e) {
                 exec.execute(new Runnable() {
                     public void run() {
@@ -45,17 +52,17 @@ public class ListenerExamples {
     private final JButton button = new JButton("Do");
     private final JLabel label = new JLabel("idle");
 
-    private void longRunningTaskWithFeedback() {
-        button.addActionListener(new ActionListener() {
+    private void longRunningTaskWithFeedback() {                               // List 9.5 Start a long-running with feedback
+        button.addActionListener(new ActionListener() {                        // On completion the task must submit another task to run in the event thread to update the user interface.
             public void actionPerformed(ActionEvent e) {
-                button.setEnabled(false);
+                button.setEnabled(false);                                      // Before executing the task, disable the button and set the label as busy.
                 label.setText("busy");
                 exec.execute(new Runnable() {
                     public void run() {
                         try {
                             /* Do big computation */
                         } finally {
-                            GuiExecutor.instance().execute(new Runnable() {
+                            GuiExecutor.instance().execute(new Runnable() {    // When the task is completed, queue another task to re-enable the button and set the label as idle.
                                 public void run() {
                                     button.setEnabled(true);
                                     label.setText("idle");
@@ -72,8 +79,8 @@ public class ListenerExamples {
     private final JButton cancelButton = new JButton("Cancel");
     private Future<?> runningTask = null; // thread-confined
 
-    private void taskWithCancellation() {
-        startButton.addActionListener(new ActionListener() {
+    private void taskWithCancellation() {                                      // List 9.6 Cancel a running task.
+        startButton.addActionListener(new ActionListener() {                   // A task that polls the thread's interrupted status and returns early on interruption.
             public void actionPerformed(ActionEvent e) {
                 if (runningTask != null) {
                     runningTask = exec.submit(new Runnable() {
@@ -111,8 +118,7 @@ public class ListenerExamples {
         });
     }
 
-
-    private void runInBackground(final Runnable task) {
+    private void runInBackground(final Runnable task) {                        // List 9.8 Run a task by using {@code BackgroundTask}.
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 class CancelListener implements ActionListener {

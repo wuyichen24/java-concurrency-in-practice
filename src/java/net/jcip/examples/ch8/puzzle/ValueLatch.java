@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch8.puzzle;
 
 import java.util.concurrent.*;
 
@@ -6,10 +6,12 @@ import net.jcip.annotations.*;
 
 /**
  * ValueLatch
- * <p/>
- * Result-bearing latch used by ConcurrentPuzzleSolver
- *
+ * 
+ * @list 8.17
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Result-bearing latch used by {@code ConcurrentPuzzleSolver}.
  */
 @ThreadSafe
 public class ValueLatch <T> {

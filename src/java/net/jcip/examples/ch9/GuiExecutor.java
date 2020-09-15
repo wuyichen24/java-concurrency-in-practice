@@ -1,18 +1,19 @@
-package net.jcip.examples;
+package net.jcip.examples.ch9;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 /**
  * GuiExecutor
- * <p/>
- * Executor built atop SwingUtilities
- *
+ * 
+ * @list 9.2
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>An Executor that delegates tasks to {@code SwingUtilities} for execution
  */
 public class GuiExecutor extends AbstractExecutorService {
-    // Singletons have a private constructor and a public factory
-    private static final GuiExecutor instance = new GuiExecutor();
+    private static final GuiExecutor instance = new GuiExecutor();   // Singletons have a private constructor and a public factory
 
     private GuiExecutor() {
     }

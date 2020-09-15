@@ -1,16 +1,18 @@
-package net.jcip.examples;
+package net.jcip.examples.ch8;
 
 import java.util.concurrent.*;
 
 /**
  * ThreadDeadlock
- * <p/>
- * Task that deadlocks in a single-threaded Executor
  *
+ * @list 8.1
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Example to illustrates thread starvation deadlock.
  */
 public class ThreadDeadlock {
-    ExecutorService exec = Executors.newSingleThreadExecutor();
+    ExecutorService exec = Executors.newSingleThreadExecutor();                // This is a single-thread executor
 
     public class LoadFileTask implements Callable<String> {
         private final String fileName;
@@ -30,9 +32,8 @@ public class ThreadDeadlock {
             Future<String> header, footer;
             header = exec.submit(new LoadFileTask("header.html"));
             footer = exec.submit(new LoadFileTask("footer.html"));
-            String page = renderBody();
-            // Will deadlock -- task waiting for result of subtask
-            return header.get() + page + footer.get();
+            String page = renderBody();          
+            return header.get() + page + footer.get();                         // Will always deadlock - The page task waiting for result of dependent subtasks: the header task and the footer task.
         }
 
         private String renderBody() {

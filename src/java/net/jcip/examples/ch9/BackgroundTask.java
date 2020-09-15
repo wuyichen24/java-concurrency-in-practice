@@ -1,15 +1,16 @@
-package net.jcip.examples;
+package net.jcip.examples.ch9;
 
 import java.util.concurrent.*;
 
 /**
  * BackgroundTask
- * <p/>
- * Background task class supporting cancellation, completion notification, and progress notification
- *
+ * 
+ * @list 9.7
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Background task class supporting cancellation, completion notification, and progress notification
  */
-
 public abstract class BackgroundTask <V> implements Runnable, Future<V> {
     private final FutureTask<V> computation = new Computation();
 
