@@ -20,3 +20,6 @@ The source code of the book "Java Concurrency in Practice (Brian Goetz)".
 - [Chapter 9 GUI Applications](src/java/net/jcip/examples/ch09)
 #### Part III: Liveness, Performance, and Testing
 - [Chapter 10 Avoiding Liveness Hazards](src/java/net/jcip/examples/ch10)
+
+## Study Notes
+- [Study Notes](https://docs.google.com/document/d/1OBjN-ie35v49KTgdoDuw4CnVLWQ906LZOqVb3sYWZ9o/edit?usp=sharing)
