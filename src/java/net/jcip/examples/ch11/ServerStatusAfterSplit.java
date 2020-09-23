@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch11;
 
 import java.util.*;
 
@@ -6,10 +6,12 @@ import net.jcip.annotations.*;
 
 /**
  * ServerStatusAfterSplit
- * <p/>
- * ServerStatus refactored to use split locks
- *
+ * 
+ * @list 11.7
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Splitting a single lock in {@code ServerStatusBeforeSplit} into multiple locks.
  */
 @ThreadSafe
 public class ServerStatusAfterSplit {

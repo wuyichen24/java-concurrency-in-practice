@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch11;
 
 import java.util.*;
 
@@ -6,14 +6,16 @@ import net.jcip.annotations.*;
 
 /**
  * ServerStatusBeforeSplit
- * <p/>
- * Candidate for lock splitting
  *
+ * @list 11.6
+ * @smell Bad
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>The example of a single lock can be split into multiple locks for better scalability.
  */
 @ThreadSafe
 public class ServerStatusBeforeSplit {
-    @GuardedBy("this") public final Set<String> users;
+    @GuardedBy("this") public final Set<String> users;               // The two types of information are completely independent: one for users, another one for queries.
     @GuardedBy("this") public final Set<String> queries;
 
     public ServerStatusBeforeSplit() {
@@ -21,7 +23,7 @@ public class ServerStatusBeforeSplit {
         queries = new HashSet<String>();
     }
 
-    public synchronized void addUser(String u) {
+    public synchronized void addUser(String u) {                     
         users.add(u);
     }
 

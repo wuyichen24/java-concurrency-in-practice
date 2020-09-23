@@ -1,4 +1,4 @@
-package net.jcip.examples;
+package net.jcip.examples.ch11;
 
 import java.util.*;
 import java.util.regex.*;
@@ -7,10 +7,12 @@ import net.jcip.annotations.*;
 
 /**
  * BetterAttributeStore
- * <p/>
- * Reducing lock duration
- *
+ * 
+ * @list 11.5
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Rewrites {@code AttributeStore} to reduce significantly the lock duration.
  */
 @ThreadSafe
 public class BetterAttributeStore {
@@ -20,7 +22,7 @@ public class BetterAttributeStore {
     public boolean userLocationMatches(String name, String regexp) {
         String key = "users." + name + ".location";
         String location;
-        synchronized (this) {
+        synchronized (this) {                                        // Only synchronize the Map.get() call.
             location = attributes.get(key);
         }
         if (location == null)
