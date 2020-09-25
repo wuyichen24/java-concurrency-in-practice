@@ -1,11 +1,15 @@
-package net.jcip.examples;
+package net.jcip.examples.ch12;
 
 import java.util.concurrent.atomic.*;
 
 /**
  * XorShift
- *
+ * 
+ * @list 12.4
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Medium-quality random number generator suitable for generating test data to test producer-consumer designs.
  */
 public class XorShift {
     static final AtomicInteger seq = new AtomicInteger(8862213);

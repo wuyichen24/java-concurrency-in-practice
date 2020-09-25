@@ -1,13 +1,16 @@
-package net.jcip.examples;
+package net.jcip.examples.ch12;
 
 import java.util.concurrent.*;
 
 /**
  * TimedPutTakeTest
- * <p/>
- * Testing with a barrier-based timer
- *
+ * 
+ * @list 12.12
+ * @list 12.12
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Multiple-threads safety test for {@code SemaphoreBoundedBuffer} with timing by using {@code BarrierTimer}.
  */
 public class TimedPutTakeTest extends PutTakeTest {
     private BarrierTimer timer = new BarrierTimer();
@@ -17,6 +20,7 @@ public class TimedPutTakeTest extends PutTakeTest {
         barrier = new CyclicBarrier(nPairs * 2 + 1, timer);
     }
 
+    // List 12.12 Testing with a Barrier-based Timer.
     public void test() {
         try {
             timer.clear();
@@ -26,7 +30,7 @@ public class TimedPutTakeTest extends PutTakeTest {
             }
             barrier.await();
             barrier.await();
-            long nsPerItem = timer.getTime() / (nPairs * (long) nTrials);
+            long nsPerItem = timer.getTime() / (nPairs * (long) nTrials);      // Calculate the average time for moving one element from producer to consumer.
             System.out.print("Throughput: " + nsPerItem + " ns/item");
             assertEquals(putSum.get(), takeSum.get());
         } catch (Exception e) {
@@ -34,6 +38,7 @@ public class TimedPutTakeTest extends PutTakeTest {
         }
     }
 
+    // List 12.13 Driver Program for TimedPutTakeTest.
     public static void main(String[] args) throws Exception {
         int tpt = 100000; // trials per thread
         for (int cap = 1; cap <= 1000; cap *= 10) {

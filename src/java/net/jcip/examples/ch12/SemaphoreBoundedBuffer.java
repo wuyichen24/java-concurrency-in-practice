@@ -1,20 +1,25 @@
-package net.jcip.examples;
+package net.jcip.examples.ch12;
 
 import java.util.concurrent.*;
 
 import net.jcip.annotations.*;
 
 /**
- * BoundedBuffer
- * <p/>
- * Bounded buffer using \Semaphore
- *
+ * SemaphoreBoundedBuffer
+ * 
+ * @list 12.1
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>The BoundedBuffer implementation, using Semaphore to implement the required bounding and blocking.
+ * 
+ * <p>The BoundedBuffer implements a fixed-length array-based queue with blocking put and take methods controlled by a pair of counting semaphores.
  */
 @ThreadSafe
 public class SemaphoreBoundedBuffer <E> {
-    private final Semaphore availableItems, availableSpaces;
-    @GuardedBy("this") private final E[] items;
+    private final Semaphore availableItems;                                    // Represents the number of elements that can be removed from the buffer, and is initially zero
+    private final Semaphore availableSpaces;                                   // Represents how many items can be inserted into the buffer, and is initialized to the size of the buffer.
+    @GuardedBy("this") private final E[] items;                                // A fixed-length array-based queue.
     @GuardedBy("this") private int putPosition = 0, takePosition = 0;
 
     public SemaphoreBoundedBuffer(int capacity) {
@@ -33,13 +38,13 @@ public class SemaphoreBoundedBuffer <E> {
         return availableSpaces.availablePermits() == 0;
     }
 
-    public void put(E x) throws InterruptedException {
+    public void put(E x) throws InterruptedException {                         // Blocking put: block until the queue is not full.
         availableSpaces.acquire();
         doInsert(x);
         availableItems.release();
     }
 
-    public E take() throws InterruptedException {
+    public E take() throws InterruptedException {                              // Blocking take: block until the queue is not empty.
         availableItems.acquire();
         E item = doExtract();
         availableSpaces.release();

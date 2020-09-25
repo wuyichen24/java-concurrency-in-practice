@@ -1,11 +1,13 @@
-package net.jcip.examples;
+package net.jcip.examples.ch12;
 
 /**
  * BarrierTimer
- * <p/>
- * Barrier-based timer
- *
+ * 
+ * @list 12.11
+ * @smell Good
  * @author Brian Goetz and Tim Peierls
+ * 
+ * <p>Barrier-based timer by using a barrier action that measures the start and end time.
  */
 public class BarrierTimer implements Runnable {
     private boolean started;
